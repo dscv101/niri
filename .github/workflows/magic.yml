@@ -1,4 +1,4 @@
-name: Magic
+name: CI
 
 on:
   push:
@@ -8,12 +8,10 @@ jobs:
   check:
     runs-on: ubuntu-22.04
     permissions:
-      id-token: "write"
-      contents: "read"
+      contents: read
+      id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
-      - uses: DeterminateSystems/flake-checker-action@main
-      - name: Run `nix build`
-        run: nix build .
+      - run: nix flake check
